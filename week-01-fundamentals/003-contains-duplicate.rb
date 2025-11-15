@@ -1,12 +1,9 @@
-# @param {Integer[]} nums
-# @return {Boolean}
-
 # 003-contains-duplicate.rb
 # LeetCode: https://leetcode.com/problems/contains-duplicate/
 # Difficulty: Easy
 # Date Solved: 2025-11-15
-# Runtime: 34 ms (Beats 67%)
-# Memory: 230 MB (Beats 44.13%)
+# Runtime: 34ms (Beats 67%)
+# Memory: 230MB (Beats 44.13%)
 #
 # Problem:
 # Given an integer array nums, return true if any value appears 
@@ -20,56 +17,91 @@
 # - 1 <= nums.length <= 10^5
 # - -10^9 <= nums[i] <= 10^9
 #
-# Approach 1:
-# My first approach was to initiate a counter hash with default value set to 0
-# traverse over each element in the nums array
-# Return true if the key is already present in the hash with the current value
-# Else update the value for the key(curr_value) to 1 and move to the next element
-# Return false if the traversal is done for all the elements and none of them satisfies the above scenario
-
-# APPROACH 2
-# Second approach is to initiate a Set and similar as above, traverse through each element in the nums array
-# If the num has already been pushed to the Set(s), return true
-# Else push that element into the set and move the next element and proceed as above
+# Approach Evolution:
 #
-# Time Complexity: O(?)
-# Space Complexity: O(?)
+# APPROACH 1 (Hash with counter - FIRST ATTEMPT):
+# - Initialize Hash.new(0) for counting
+# - Check if counter[num] > 0
+# - Works but unnecessary - we don't need counts, just existence!
+#
+# APPROACH 2 (Set - OPTIMAL):
+# - Use Set for O(1) existence checks
+# - Check if element exists before adding
+# - Time: O(n), Space: O(n)
+# - BEST for interviews - clear intent
 #
 # Key Insights:
-# [WHAT DID YOU LEARN?]
+# - Set.include? is O(1) vs Array.include? which is O(n)
+# - Set is semantically correct - checking "existence" not "count"
+# - Ruby's Set requires 'require set' - not built-in like Hash
+# - For duplicate detection, Set > Hash > Array
+# - Sorting approach: O(n log n) time but O(1) space trade-off
 
 require 'set'
+
+# ==================== SOLUTION 1: SET (OPTIMAL) ====================
+
 def contains_duplicate(nums)
-  # Edge cases
-  return false if nums.empty? || nums.nil? || nums.size == 1
-
-  s = Set.new
+  # Per constraints: 1 <= nums.length, so no need to check empty/nil
+  # Single element can't be duplicate, but loop handles this correctly
+  
+  seen = Set.new
+  
   nums.each do |num|
-    return true if s.include?(num)
-
-    s << num
+    return true if seen.include?(num)
+    seen << num
   end
-
+  
   false
 end
 
-def contains_duplicate_using_uniq(nums)
-  return false if nums.empty? || nums.nil? || nums.size == 1
+# Time Complexity: O(n) - single pass through array
+# Space Complexity: O(n) - set stores up to n elements
 
-  return nums != nums.uniq
-end
+# ==================== SOLUTION 2: HASH (WORKS BUT OVERKILL) ====================
 
 def contains_duplicate_using_hash(nums)
-  # Approach 2
-  return false if nums.empty? || nums.nil? || nums.size == 1
   counter = Hash.new(0)
+  
   nums.each do |num|
     return true if counter[num] > 0
     counter[num] += 1
   end
-
+  
   false
 end
+
+# Time Complexity: O(n)
+# Space Complexity: O(n)
+# Note: Hash is overkill here - we don't need counts, just existence
+
+# ==================== SOLUTION 3: RUBY'S UNIQ (ELEGANT) ====================
+
+def contains_duplicate_using_uniq(nums)
+  # Compare sizes instead of entire arrays for efficiency
+  nums.size != nums.uniq.size
+end
+
+# Time Complexity: O(n) - uniq is O(n)
+# Space Complexity: O(n) - uniq creates new array
+# Note: Elegant but less explicit for interviews
+
+# ==================== SOLUTION 4: SORTING (SPACE-OPTIMIZED) ====================
+
+def contains_duplicate_sort(nums)
+  sorted = nums.sort
+  
+  # Use each_cons(2) for consecutive pairs - idiomatic Ruby!
+  sorted.each_cons(2) do |a, b|
+    return true if a == b
+  end
+  
+  false
+end
+
+# Time Complexity: O(n log n) - due to sort
+# Space Complexity: O(1) or O(n) depending on Ruby's sort implementation
+# Trade-off: Slower but uses less space
 
 # ==================== TEST CASES ====================
 
@@ -91,27 +123,54 @@ p contains_duplicate(large_array)                  # false - all distinct
 large_array_dup = (1..10000).to_a + [5000]
 p contains_duplicate(large_array_dup)              # true - one duplicate
 
-# ==================== ALTERNATIVE APPROACHES ====================
+puts "\n🔍 Comparing All Approaches:"
+test_array = [1,2,3,4,5,1]
 
-# Approach 2: Sorting (if space is constrained)
-def contains_duplicate_sort(nums)
-  # YOUR ALTERNATIVE SOLUTION
-  sorted = nums.sort
-  arr_size = sorted.size
-  sorted.each_with_index do |n, i|
-    return true if sorted[i+1] == n && i < arr_size - 1
-  end
-
-  false
-end
+puts "Set approach: #{contains_duplicate(test_array)}"
+puts "Hash approach: #{contains_duplicate_using_hash(test_array)}"
+puts "Uniq approach: #{contains_duplicate_using_uniq(test_array)}"
+puts "Sort approach: #{contains_duplicate_sort(test_array)}"
 
 # ==================== INTERVIEW TALKING POINTS ====================
 #
 # Q: "Why Set instead of Hash?"
-# A: As we are only looking for the element and not the indexes related to the value, using Set is a better approach for space-time complexity
+# A: "We only need to check existence, not count occurrences. 
+#     Set is semantically clearer - it represents a collection of unique items.
+#     Both have O(1) lookup, but Set expresses intent better."
 #
 # Q: "What if we can't use extra space?"
-# A: We can sort the array and check if the next element is the same. This will come with a time complexity overhead.
+# A: "We can sort the array first (O(n log n)), then check adjacent elements.
+#     This uses O(1) extra space but trades off time complexity.
+#     However, sorting may modify the original array, which could be a constraint."
+#
+# Q: "What about the uniq approach?"
+# A: "It's elegant and idiomatic Ruby, but in an interview, I prefer the Set approach
+#     because it's more explicit and easier to explain the algorithm step-by-step.
+#     Also, uniq creates a new array, so it's less space-efficient in practice."
 #
 # Q: "How would you optimize for very large arrays?"
-# A: For very large arrays, using set is a better approach as we just need to return true if the current element exists in the Set else, we will push the current element to the Set and move forward with the next element doing the same.
+# A: "For very large arrays that don't fit in memory:
+#     1. If data is on disk, we could use external sorting
+#     2. If distributed, we could use MapReduce with hash partitioning
+#     3. For streaming data, we could use probabilistic data structures like Bloom filters
+#     But for arrays that fit in memory, Set with O(n) time is optimal."
+#
+# Q: "What's the space complexity in worst case?"
+# A: "O(n) when all elements are distinct. We'd store all n elements in the Set.
+#     Best case is O(1) when first two elements are duplicates - we return immediately."
+#
+# Ruby-Specific Notes:
+# - require 'set' is needed - Set is not built-in like Hash/Array
+# - Set#include? and Set#add (or <<) are both O(1) average case
+# - each_cons(n) yields consecutive n-element windows - great for adjacent checks
+# - uniq uses hash internally, so it's also O(n) time
+
+# LEARNINGS
+# An array has each_cons method
+# each_cons basically takes an integer having number of elements less than the total size of element
+# Here, we can write sorted.each_cons(2). This will pick 2 consecutive elements from the array.
+# which is how we can check if the next element is the same to the currrent element or not
+
+# MapReduce with hash patitioning: very large data that does not fit in memory, we can use this
+  # - NEED TO LEARN ABOUT THIS
+  # Bloom filters and probabilistic data structures - NEED TO LEARN
