@@ -77,3 +77,45 @@
 - Product of Array Except Self (Expected: 40 mins)
 - Goal: Focus on O(n) solutions from the start!
 - Goal: Add comprehensive test cases to both solutions
+
+## Day 3 - Nov 16, 2025
+
+### Problems Solved
+
+4. **Product of Array Except Self** 🔥 (FIRST MEDIUM!)
+   - Difficulty: Medium
+   - Runtime: [YOUR STATS] 
+   - Implemented 2 approaches:
+     * O(n) space with prefix/suffix arrays
+     * O(1) space optimized version
+   - Time Spent: ~4 hours
+   - Challenge: Got stuck, asked for help, debugged *= bug
+   - Key Learning: Prefix/suffix pattern - will see this again!
+
+### Day 3 Reflections
+
+**The Struggle:**
+- Spent 3+ hours stuck on this problem
+- Couldn't figure out the prefix/suffix pattern initially
+- Had a tiny bug: used `*` instead of `*=` 
+
+**The Breakthrough:**
+- Asked for help (smart move!)
+- Understood prefix/suffix visualization
+- Fixed the 1-character bug immediately
+- Got ACCEPTED!
+
+**What I Learned:**
+- Getting stuck is part of the process (not failure!)
+- Prefix/suffix pattern is powerful
+- Small syntax details matter (`*` vs `*=`)
+- Persistence > talent
+
+**Feeling:** PROUD! First medium problem complete! 💪
+
+### Week 1 Stats
+- **Problems Solved:** 4/10 (40%)
+- **Medium Problems:** 1
+- **Days Active:** 3/3 (100% consistency)
+- **Total Time:** ~7 hours
+- **Status:** AHEAD OF SCHEDULE!
