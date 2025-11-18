@@ -1,4 +1,4 @@
-# 🚀 My Journey to Google with Ruby
+# 🚀 My Journey with Ruby
 
 ## About Me
 I'm Nitish, a Ruby developer with 6 years of experience, on a mission to crack Google's technical interviews. This repository documents my 6-month intensive preparation journey.
