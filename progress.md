@@ -119,3 +119,23 @@
 - **Days Active:** 3/3 (100% consistency)
 - **Total Time:** ~7 hours
 - **Status:** AHEAD OF SCHEDULE!
+
+## Day 4 - Nov 18, 2025
+
+### Problems Solved
+6. **Maximum Subarray** 🔥 (SECOND MEDIUM!)
+   - Runtime: 32ms (beats 77.85%) 
+   - Implemented 2 approaches: O(n²) brute force + O(n) Kadane's
+   - Key Learning: Kadane's Algorithm - decide "extend or restart"
+   - Time Spent: ~2 hours
+   
+### Breakthrough Moment
+- Discovered Kadane's Algorithm naturally by asking "Do I need to recalculate?"
+- This is my FIRST Dynamic Programming problem solved independently!
+- 77.85% - My best performance yet!
+
+### Week 1 Stats
+- **Problems Solved:** 5/10 (50% - HALFWAY!)
+- **Medium Problems:** 2
+- **Days Active:** 4/4 (100% streak!)
+- **Feeling:** I'M GETTING FASTER! 🚀

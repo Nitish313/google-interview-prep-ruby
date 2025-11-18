@@ -49,11 +49,10 @@ end
 
 def max_sub_array(nums)
   arr_size = nums.size
-  max_sum = nums.first
-  current_sum = 0
-  0.upto(arr_size - 1) do |i|
+  max_sum = current_sum = nums.first
+  1.upto(arr_size - 1) do |i|
     current_sum = [nums[i], current_sum + nums[i]].max
-    max_sum = current_sum if current_sum > max_sum
+    max_sum = [current_sum, max_sum].max
   end
   max_sum
 end
