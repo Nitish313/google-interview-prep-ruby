@@ -24,3 +24,28 @@ def max_profit_v1(pr)
   end
   local_max
 end
+
+# Below is the optimized approach in O(n) time complexity
+# Runtime 60 ms, beats 25 per cent
+# Here we initiate a min_price and assign it to the first ele as a starting point
+# Initiate max_profit and assign a value of 0 to start with
+# Loop over each element in the price array
+# check if the curr prices's value is less than min_price
+# If yes, reassign min_price to that value
+# check if curr max if less that the difference between the curr element and min_price
+# If yes, reassign max_price to this value
+
+def max_profit(pr)
+  max_profit = 0
+  min_price = pr[0]
+  pr_size = pr.size
+  1.upto(pr_size - 1) do |i|
+    min_price = [pr[i], min_price].min
+    max_profit = [max_profit, pr[i] - min_price].max
+  end
+  max_profit
+end
+
+max_profit([7,1,5,3,6,4])
+max_profit([7,6,4,3,1])
+max_profit([1])
