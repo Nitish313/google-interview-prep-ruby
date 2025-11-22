@@ -35,13 +35,29 @@ end
 # check if curr max if less that the difference between the curr element and min_price
 # If yes, reassign max_price to this value
 
-def max_profit(pr)
+def max_profit_v2(pr)
   max_profit = 0
   min_price = pr[0]
   pr_size = pr.size
   1.upto(pr_size - 1) do |i|
     min_price = [pr[i], min_price].min
     max_profit = [max_profit, pr[i] - min_price].max
+  end
+  max_profit
+end
+
+
+# This is the best approach
+# Just a little tweak from the above solution
+# We have eliminated the .max and .min method and directly check min and max as those were creating new arrays
+# Beats 58 per cent with 51 ms execution time
+def max_profit(prices)
+  min_price = prices[0]
+  max_profit = 0
+  prices.each do |price|
+    min_price = price if price < min_price
+    diff = price - min_price 
+    max_profit = diff if diff > max_profit
   end
   max_profit
 end
