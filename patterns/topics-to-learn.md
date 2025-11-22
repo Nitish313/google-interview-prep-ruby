@@ -26,3 +26,18 @@
 - **What:** Iterates over consecutive n-element windows
 - **Use case:** Checking adjacent elements in arrays
 - **Example:** `[1,2,3,4].each_cons(2)` → [1,2], [2,3], [3,4]
+
+# Google Follow-Up Questions - Maximum Subarray
+
+## Must Know (High Priority):
+1. ✅ Return subarray indices (not just sum)
+2. ✅ Handle circular array case
+
+## Good to Know (Medium Priority):
+3. Divide and conquer approach (O(n log n))
+
+## Advanced (Low Priority):
+4. k maximum subarrays
+5. 2D matrix version
+
+## Action: Try Question 1 tomorrow morning (15 mins)
